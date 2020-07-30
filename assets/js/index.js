@@ -4,15 +4,18 @@ $(function() {
     //头像文本和图片
     //退出功能
     var layer = layui.layer
-    layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function(index) {
-        //do something
-        // 1. 清空本地存储中的 token
-        localStorage.removeItem('token')
-            // 2. 重新跳转到登录页面
-        location.href = '/login.html'
+    $("exit").on("click", function() {
+        layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function(index) {
+            //do something
+            // 1. 清空本地存储中的 token
+            localStorage.removeItem('token')
+                // 2. 重新跳转到登录页面
+            location.href = '/login.html'
 
-        // 关闭 confirm 询问框
-        layer.close(index)
+            // 关闭 confirm 询问框
+            layer.close(index)
+        })
+
     })
 
 })
@@ -26,7 +29,7 @@ function getUserInfo() {
         },
         success: function(res) {
             console.log(res);
-            if (res.status === 1) {
+            if (res.status !== 0) {
                 return layer.msg("获取用户数据失败")
             }
             renderAvatar(res.data)
